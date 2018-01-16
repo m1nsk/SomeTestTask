@@ -127,7 +127,7 @@ public class Calculator {
         return strOut;
     }
 
-    public static Double calc(List<String> strOut) throws CalculatorParseException {
+    public static Double calc(List<String> strOut) throws CalculateException {
         Deque<Double> stack = new ArrayDeque<Double>();
         Double a, b;
         for (String x : strOut) {
@@ -149,7 +149,7 @@ public class Calculator {
                 case "/":
                     b = stack.pop();
                     if (b == 0)
-                        throw new CalculatorParseException("division by null");
+                        throw new CalculateException("division by null");
                     a = stack.pop();
                     stack.push(a / b);
                     break;
@@ -159,7 +159,7 @@ public class Calculator {
                         stack.push(Double.parseDouble(x));
                         break;
                     } catch (NumberFormatException e) {
-                        throw new CalculatorParseException("Element parse error");
+                        throw new CalculateException("Element parse error");
                     }
             }
         }
@@ -179,6 +179,9 @@ public class Calculator {
             }
         } catch (CalculatorParseException cpe) {
             System.out.println(cpe.getMessage());
+            return null;
+        } catch (CalculateException ce){
+            System.out.println(ce.getMessage());
             return null;
         }
         return stringResult;
